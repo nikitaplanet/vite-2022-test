@@ -1,19 +1,24 @@
-<script setup>
-import { ref } from 'vue'
+<script>
+import { db } from '../assets/js/db.js'
 
-defineProps({
-  msg: String
-})
+export default {
+    props: {},
+    setup(props) {
+        return {}
+    }
+}
 
-const count = ref(0)
 </script>
 
 <template>
-   <div class="home-wrapper">
-        Home
+   <div class="homebox shadow-md">
+        hello
    </div>
 </template>
 
 <style scoped>
-@import "../assets/scss/default.scss";
+.homebox {
+    width: 300px;
+    height: 300px;
+}
 </style>
