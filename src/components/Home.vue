@@ -1,46 +1,27 @@
 <script>
-import {setData, getData} from '../assets/js/db.js'
 import {ref,reactive} from 'vue'
-
-function getRandom(x){
-    return Math.floor(Math.random()*x)+1;
-}
 
 export default {
     props: {},
     setup(props) {
-        let dataAry = reactive([]);
-        let dataUserId = ref(null);
-        let userName = ref(null);
-        let userEmail = ref(null);
-        let userId = getRandom(99);
-
-        const updateField = () => {
-            let apiPath = `users/${userId}`;
-            setData(apiPath, {
-                name: userName.value,
-                email: userEmail.value
-            });
-        }
-
-        const getDataFromDB = async () => {
-            let apiPath = `users/${dataUserId.value}`;
-            let resData = await getData(apiPath);
-
-            if (resData) {
-                dataAry.push(resData);
-            } else {
-                dataAry = [];
+        const menu = [
+            {
+                name: "HOME",
+                url: "/"
+            },
+            {
+                name: "PORTFOLIO",
+                url: "/portfolio"
+            },
+            {
+                name: "CONTACT",
+                url: "contact"
             }
-        }
+        ];
+
 
         return {
-            dataAry,
-            dataUserId,
-            userName,
-            userEmail,
-            updateField,
-            getDataFromDB
+            menu
         }
     }
 }
@@ -48,23 +29,21 @@ export default {
 </script>
 
 <template>
-    <label for="name">姓名:</label>
-    <input type="text" id="name" v-model="userName">
-    <label for="name">Email:</label>
-    <input type="text" id="email" v-model="userEmail">
-    <button type="button" @click="updateField">更新資料</button>
-    <br>
-    <label for="dataUserId">UserId:</label>
-    <input type="number" id="dataUserId" v-model="dataUserId">
-    <button type="button" @click="getDataFromDB">讀取資料</button>
-    <div class="homebox shadow-md">
-        {{ dataAry }}
+    <nav class="w-full h-16 fixed flex justify-center items-center bg-slate-900">
+        <span class="w-11/12 flex items-center">
+            <img class="h-9 hover:opacity-90" src="@/assets/images/planet.png" alt="planet">
+            <router-link :to="item.url"
+                         class="text-yellow-300 font-bold tracking-wide mr-5 hover:text-pink-400 hover:border-b-2 hover:border-b-pink-400 transition ease-in-out delay-50"
+                         :class="{'ml-8':index === 0}"
+                         v-for="(item, index) in menu">
+                {{ item.name }}
+            </router-link>
+        </span>
+    </nav>
+    <div class="w-full min-h-screen bg-indigo-900">
+
     </div>
 </template>
 
 <style scoped>
-.homebox {
-    width: 300px;
-    height: 300px;
-}
 </style>
